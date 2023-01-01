@@ -10,3 +10,7 @@
       - i3lock 
       state: latest
 
+  - name: install discord 
+    community.general.pacman:
+      name: discord 
+      state: latest
