@@ -1,16 +1,69 @@
 ---
 - hosts: localhost
   become: true
-  tasks:
-  - name: install i3 
+  tasks:  
+
+  - name: install communication tools
+    community.general.pacman:
+      name: 
+        - discord 
+        - signal-desktop
+        - zoom
+      state: latest
+        
+  - name: install pacman unorganized software
     community.general.pacman:
       name:
-      - i3-gaps
-      - i3status
-      - i3lock 
+        - kitty
+        - tmate
+        - chromium
+        - lazygit
+        - evince        
+      state: latest
+         
+  - name: install tmate
+    community.general.pacman:
+      name: tmate
       state: latest
 
-  - name: install discord 
-    community.general.pacman:
-      name: discord 
-      state: latest
+  - name: Create the `aur_builder` user
+    become: yes
+    ansible.builtin.user:
+      name: aur_builder
+      create_home: yes
+      group: wheel
+
+  - name: Allow the `aur_builder` user to run `sudo pacman` without a password
+    become: yes
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers.d/11-install-aur_builder
+      line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+      create: yes
+      validate: 'visudo -cf %s'
+
+  - name: install rcm
+    kewlfft.aur.aur:
+      use: yay
+      name: rcm
+    become_user: aur_builder
+
+  - name: install aur communication tools
+    kewlfft.aur.aur:
+      use: yay
+      name:
+        - zoom
+        - teams
+    become_user: aur_builder
+
+  - name: install aur needs to be cleaned
+    kewlfft.aur.aur:
+      use: yay
+      name:
+        - zotero-bin
+        - brscan4
+    become_user: aur_builder
+
+
+
+
+
