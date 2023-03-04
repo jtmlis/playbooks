@@ -19,6 +19,14 @@
         - chromium
         - lazygit
         - evince        
+        - pandoc
+        - emacs-nativecomp
+        - fd
+        - ripgrep
+        - transmission-gtk
+        - visual-studio-code-bin
+        - google-chrome
+
       state: latest
          
   - name: install tmate
@@ -61,6 +69,7 @@
       name:
         - zotero-bin
         - brscan4
+        - flameshot
     become_user: aur_builder
 
 
