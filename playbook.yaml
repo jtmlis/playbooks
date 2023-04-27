@@ -1,16 +1,9 @@
----
+-
 - hosts: localhost
   become: true
-  tasks:  
+  tasks:
 
-  - name: install communication tools
-    community.general.pacman:
-      name: 
-        - discord 
-        - signal-desktop
-        - zoom
-      state: latest
-        
+
   - name: install pacman unorganized software
     community.general.pacman:
       name:
@@ -18,21 +11,29 @@
         - tmate
         - chromium
         - lazygit
-        - evince        
+        - evince
         - pandoc
-        - emacs-nativecomp
-        - fd
-        - ripgrep
         - transmission-gtk
-        - visual-studio-code-bin
-        - google-chrome
+        - fish
 
       state: latest
-         
+
   - name: install tmate
     community.general.pacman:
       name: tmate
       state: latest
+
+  - name: install doom pre-requisites
+    community.general.pacman:
+      name:
+        - emacs-nativecomp
+        - ripgrep
+        - fd
+        - python-markdown
+        - shellcheck
+        - cmake
+      state: latest
+
 
   - name: Create the `aur_builder` user
     become: yes
@@ -75,4 +76,24 @@
 
 
 
+  - name: install communication tools
+    kewlfft.aur.aur:
+      use: yay
+      name:
+        - discord
+        - signal-desktop
+        - zoom
+        - visual-studio-code-bin
+        - google-chrome
+    become_user: aur_builder
 
+  - name: install doom pre-requirements
+    kewlfft.aur.aur:
+      use: yay
+      name:
+        - emacs
+        - signal-desktop
+        - zoom
+        - visual-studio-code-bin
+        - google-chrome
+    become_user: aur_builder
