@@ -69,6 +69,7 @@
       name:
         - zoom
         - teams
+        - hexchat
     become_user: aur_builder
 
   - name: install aur needs to be cleaned
@@ -80,10 +81,7 @@
         - flameshot
     become_user: aur_builder
 
-
-
-
-  - name: install communication tools
+  - name: install doom pre-requirements
     kewlfft.aur.aur:
       use: yay
       name:
@@ -92,15 +90,5 @@
         - zoom
         - visual-studio-code-bin
         - google-chrome
-    become_user: aur_builder
-
-  - name: install doom pre-requirements
-    kewlfft.aur.aur:
-      use: yay
-      name:
-        - emacs
-        - signal-desktop
-        - zoom
-        - visual-studio-code-bin
-        - google-chrome
+        - slack-desktop
     become_user: aur_builder
