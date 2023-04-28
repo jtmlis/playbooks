@@ -1,4 +1,4 @@
--
+
 - hosts: localhost
   become: true
   tasks:
@@ -32,6 +32,13 @@
         - python-markdown
         - shellcheck
         - cmake
+      state: latest
+ 
+  - name: install python packages
+    community.general.pacman:
+      name:
+        - python
+        - python-pip
       state: latest
 
 
