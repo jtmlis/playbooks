@@ -39,6 +39,7 @@
       name:
         - python
         - python-pip
+        - arp-scan
       state: latest
 
 
